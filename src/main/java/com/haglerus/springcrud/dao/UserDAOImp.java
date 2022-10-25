@@ -11,7 +11,6 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
-@Transactional
 public class UserDAOImp implements UserDAO {
 
     @PersistenceContext
@@ -31,16 +30,19 @@ public class UserDAOImp implements UserDAO {
         return query.getResultList().stream().findAny().orElse(null);
     }
 
+    @Transactional
     @Override
     public void add(User user) {
         entityManager.persist(user);
     }
 
+    @Transactional
     @Override
     public void update(User user) {
         entityManager.merge(user);
     }
 
+    @Transactional
     @Override
     public void delete(Long id) {
         entityManager.remove(getUser(id));
