@@ -5,7 +5,9 @@ import com.haglerus.springcrud.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
 public class UsersController {
@@ -37,13 +39,13 @@ public class UsersController {
     }
 
     @GetMapping(value = "/user/{id}")
-    public String showUser(Model model, @PathVariable("id") Long id) {
+    public String showUser(ModelMap model, @PathVariable("id") Long id) {
         model.addAttribute("user", userService.getUser(id));
         return "user";
     }
 
     @PostMapping(value = "/user/{id}")
-    public String updateUser(Model model, @PathVariable("id") Long id, @RequestParam("name") String name,
+    public String updateUser(ModelMap model, @PathVariable("id") Long id, @RequestParam("name") String name,
                              @RequestParam("surname") String surname, @RequestParam("email") String email) {
         User user = userService.getUser(id);
         user.setName(name);
@@ -55,15 +57,9 @@ public class UsersController {
     }
 
     @GetMapping(value = "/user/{id}/delete")
-    public String delete (@PathVariable("id") Long id) {
+    public RedirectView delete (@PathVariable("id") Long id) {
         userService.delete(id);
-        return "redirect:/users";
+        return new RedirectView("/users");
     }
-
-
-
-
-
-
 
 }

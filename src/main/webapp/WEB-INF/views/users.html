@@ -15,17 +15,19 @@
             </tr>
         </thead>
         <tbody>
-            <tr th:each = "user : ${users}">
+            <th:block th:each = "user : ${users}">
+            <tr >
                 <td th:text="${user.getName()}"/>
                 <td th:text="${user.getSurname()}"/>
                 <td th:text="${user.getEmail()}"/>
                 <td>
-                    <a th:href="'user' + ${user.id}">Edit</a>
+                    <a th:href="'user/' + ${user.getId()}">Edit</a>
                 </td>
                 <td>
-                    <a th:href="'user' + ${user.id} + '/delete'">Delete</a>
+                    <a th:href="'user/' + ${user.getId()} + '/delete'">Delete</a>
                 </td>
             </tr>
+            </th:block>
         </tbody>
     </table>
     <a th:href="'users/new'">
